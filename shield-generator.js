@@ -16,9 +16,9 @@
 function shieldGenerator(canvas) {
     //this.canvas = null;
     //this.ctx = null;
-    this.startX = 10;
-    this.startY = 10;
-    this.scale = 1;
+    this.posX = 0;
+    this.posY = 0;
+    this.scale = 24;
     this.angle = 0.333;
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -26,6 +26,9 @@ function shieldGenerator(canvas) {
 
     function drawShield() {
         ctx = this.ctx;
+        var centerX = ((this.posX * 14) * (this.scale)) - (7 * this.scale);
+        var centerY = ((this.posY * 16) * (this.scale)) - (8 * this.scale);
+        ctx.translate( centerX, centerY );
         var metals = new Array(
             "#ffdc0a",
             "#f0f0f0"
@@ -66,7 +69,10 @@ function shieldGenerator(canvas) {
         }
 
         if (fieldType == 'ordinary') {
+            
             var ordinary = Math.floor((Math.random()*7)+1);
+            console.log("o" + ordinary);
+
             //ordinary = 7;
             switch (ordinary) {
                 case 1:
@@ -95,6 +101,8 @@ function shieldGenerator(canvas) {
 
         if (fieldType == 'party') {
             var ordinary = Math.floor((Math.random()*6)+1);
+            console.log("p" + ordinary);
+
             //ordinary = 7;
             switch (ordinary) {
                 case 1:
@@ -123,6 +131,9 @@ function shieldGenerator(canvas) {
         pathShield(this);
         ctx.lineWidth = 3;
         ctx.stroke();
+
+        // Reset back to 0,0
+        ctx.translate( -(centerX), -(centerY) );
     }
 
     function pathShield(parent) {
@@ -133,30 +144,27 @@ function shieldGenerator(canvas) {
         ctx = this.ctx;
 
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + (300 * scale), y);
-        ctx.lineTo(x + (300 * scale), y + (100 * scale));
+        ctx.moveTo( -6 * scale, -6 * scale );
+        ctx.lineTo( 6 * scale, -6 * scale );
+        ctx.lineTo( 6 * scale, -2 * scale );
 
-        ctx.arc(x, y + (100 * scale), (300 * scale), 0.0 * Math.PI, angle * Math.PI);
+        ctx.arc( -6 * scale, -2 * scale, 12 * scale, 0.0 * Math.PI, angle * Math.PI);
+        ctx.arc( 6 * scale, -2 * scale, 12 * scale, (1.0 - angle) * Math.PI, 1.0 * Math.PI);
 
-        ctx.arc(x + (300 * scale), y + (100 * scale), (300 * scale), (1.0 - angle) * Math.PI, 1.0 * Math.PI);
-
-        ctx.lineTo(x, y);
+        ctx.lineTo( -6 * scale, -6 * scale );
         ctx.closePath();
 
     }
 
     function drawBend(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x, y - (50 * scale));
-        ctx.lineTo(x + (scale * 350), y + (scale * 300));
-        ctx.lineTo(x + (scale * 300), y + (scale * 350));
-        ctx.lineTo(x + (scale * -50), y + (scale * 0));
+        ctx.moveTo( -6 * scale, -8 * scale);
+        ctx.lineTo( 8 * scale, 6 * scale);
+        ctx.lineTo( 6 * scale, 8 * scale);
+        ctx.lineTo( -8 * scale,  -6 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -165,15 +173,13 @@ function shieldGenerator(canvas) {
 
     function drawPartyBend(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + (scale * 400), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * 0));
+        ctx.moveTo( -6 * scale, -6 * scale);
+        ctx.lineTo( 14 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, -6 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -182,24 +188,22 @@ function shieldGenerator(canvas) {
 
     function drawCross(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 100), y + (scale * -50));
-        ctx.lineTo(x + (scale * 200), y + (scale * -50));
-        ctx.lineTo(x + (scale * 200), y + (scale * 100));
-        ctx.lineTo(x + (scale * 300), y + (scale * 100));
-        ctx.lineTo(x + (scale * 300), y + (scale * 200));
-        ctx.lineTo(x + (scale * 200), y + (scale * 200));
-        ctx.lineTo(x + (scale * 200), y + (scale * 400));
-        ctx.lineTo(x + (scale * 100), y + (scale * 400));
-        ctx.lineTo(x + (scale * 100), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 100));
-        ctx.lineTo(x + (scale * 100), y + (scale * 100));
-        ctx.lineTo(x + (scale * 100), y + (scale * -50));
+        ctx.moveTo( -2 * scale, -8 * scale);
+        ctx.lineTo( 2 * scale, -8 * scale);
+        ctx.lineTo( 2 * scale, -2 * scale);
+        ctx.lineTo( 6 * scale, -2 * scale);
+        ctx.lineTo( 6 * scale, 2 * scale);
+        ctx.lineTo( 2 * scale, 2 * scale);
+        ctx.lineTo( 2 * scale, 14 * scale);
+        ctx.lineTo( -2 * scale, 14 * scale);
+        ctx.lineTo( -2 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, -2 * scale);
+        ctx.lineTo( -2 * scale, -2 * scale);
+        ctx.lineTo( -2 * scale, -8 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -208,26 +212,24 @@ function shieldGenerator(canvas) {
 
     function drawPartyCross(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 150), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * 150));
-        ctx.lineTo(x + (scale * 150), y + (scale * 150));
-        ctx.lineTo(x + (scale * 150), y + (scale * -50));
+        ctx.moveTo( 0 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, 0 * scale);
+        ctx.lineTo( 0 * scale, 0 * scale);
+        ctx.lineTo( 0 * scale, -8 * scale);
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * 150));
-        ctx.lineTo(x + (scale * 150), y + (scale * 150));
-        ctx.lineTo(x + (scale * 150), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * 150));
+        ctx.moveTo( -6 * scale, 0 * scale);
+        ctx.lineTo( 0 * scale, 0 * scale);
+        ctx.lineTo( 0 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, 0 * scale);
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
@@ -235,16 +237,14 @@ function shieldGenerator(canvas) {
 
     function drawPale(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 100), y + (scale * -50));
-        ctx.lineTo(x + (scale * 200), y + (scale * -50));
-        ctx.lineTo(x + (scale * 200), y + (scale * 400));
-        ctx.lineTo(x + (scale * 100), y + (scale * 400));
-        ctx.lineTo(x + (scale * 100), y + (scale * -50));
+        ctx.moveTo( -2 * scale, -8 * scale);
+        ctx.lineTo( 2 * scale, -8 * scale);
+        ctx.lineTo( 2 * scale, 14 * scale);
+        ctx.lineTo( -2 * scale, 14 * scale);
+        ctx.lineTo( -2 * scale, -8 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -253,16 +253,14 @@ function shieldGenerator(canvas) {
 
     function drawPartyPale(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * -50));
-        ctx.lineTo(x + (scale * 150), y + (scale * -50));
-        ctx.lineTo(x + (scale * 150), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * 400));
-        ctx.lineTo(x + (scale * 0), y + (scale * -50));
+        ctx.moveTo( -6 * scale, -8 * scale);
+        ctx.lineTo( 0 * scale, -8 * scale);
+        ctx.lineTo( 0 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, 14 * scale);
+        ctx.lineTo( -6 * scale, -8 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -271,16 +269,14 @@ function shieldGenerator(canvas) {
 
     function drawFess(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * 100));
-        ctx.lineTo(x + (scale * 300), y + (scale * 100));
-        ctx.lineTo(x + (scale * 300), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 100));
+        ctx.moveTo( -6 * scale, -2 * scale);
+        ctx.lineTo( 6 * scale, -2 * scale);
+        ctx.lineTo( 6 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, -2 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -289,16 +285,14 @@ function shieldGenerator(canvas) {
 
     function drawPartyFess(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * 150));
-        ctx.lineTo(x + (scale * 0), y + (scale * 150));
-        ctx.lineTo(x + (scale * 0), y + (scale * -50));
+        ctx.moveTo( -6 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, 0 * scale);
+        ctx.lineTo( -6 * scale, 0 * scale);
+        ctx.lineTo( -6 * scale, -8 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -307,24 +301,22 @@ function shieldGenerator(canvas) {
 
     function drawSaltire(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y - (50 * scale));
-        ctx.lineTo(x + (scale * 150), y + (scale * 100));
-        ctx.lineTo(x + (scale * 300), y + (scale * -50));
-        ctx.lineTo(x + (scale * 350), y + (scale * 0));
-        ctx.lineTo(x + (scale * 200), y + (scale * 150));
-        ctx.lineTo(x + (scale * 350), y + (scale * 300));
-        ctx.lineTo(x + (scale * 300), y + (scale * 350));
-        ctx.lineTo(x + (scale * 150), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 350));
-        ctx.lineTo(x + (scale * -50), y + (scale * 300));
-        ctx.lineTo(x + (scale * 100), y + (scale * 150));
-
-        ctx.lineTo(x + (scale * -50), y + (scale * 0));
+        ctx.moveTo( -6 * scale, -8 * scale);
+        ctx.lineTo( 0 * scale, -2 * scale);
+        ctx.lineTo( 6 * scale, -8 * scale);
+        ctx.lineTo( 8 * scale, -6 * scale);
+        ctx.lineTo( 2 * scale, 0 * scale);
+        ctx.lineTo( 8 * scale, 6 * scale);
+        ctx.lineTo( 6 * scale, 8 * scale);
+        ctx.lineTo( 0 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, 8 * scale);
+        ctx.lineTo( -8 * scale, 6 * scale);
+        ctx.lineTo( -2 * scale, 0 * scale);
+        ctx.lineTo( -8 * scale, -6 * scale);
+        ctx.lineTo( -6 * scale, -8 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -333,26 +325,22 @@ function shieldGenerator(canvas) {
 
     function drawPartySaltire(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * -0));
-        ctx.lineTo(x + (scale * 150), y + (scale * -150));
-        ctx.lineTo(x + (scale * 300), y + (scale * 0));
-        ctx.lineTo(x + (scale * 150), y + (scale * 150));
-        ctx.lineTo(x + (scale * 0), y + (scale * -0));
+        ctx.moveTo( -6 * scale, -6 * scale );
+        ctx.lineTo( 0 * scale, 0 * scale);
+        ctx.lineTo( -6 * scale, 6 * scale);
+        ctx.lineTo( -6 * scale, -6 * scale);
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * 300));
-        ctx.lineTo(x + (scale * 150), y + (scale * 150));
-        ctx.lineTo(x + (scale * 300), y + (scale * 300));
-        ctx.lineTo(x + (scale * 150), y + (scale * 450));
-        ctx.lineTo(x + (scale * 0), y + (scale * 300));
+        ctx.moveTo( 6 * scale, -6 * scale);
+        ctx.lineTo( 6 * scale, 6 * scale);
+        ctx.lineTo( 0 * scale, 0 * scale);
+        ctx.lineTo( 6 * scale, -6 * scale);
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
@@ -360,18 +348,16 @@ function shieldGenerator(canvas) {
 
     function drawChevron(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 150), y + (scale * 100));
-        ctx.lineTo(x + (scale * 350), y + (scale * 300));
-        ctx.lineTo(x + (scale * 300), y + (scale * 350));
-        ctx.lineTo(x + (scale * 150), y + (scale * 200));
-        ctx.lineTo(x + (scale * 0), y + (scale * 350));
-        ctx.lineTo(x + (scale * -50), y + (scale * 300));
-        ctx.lineTo(x + (scale * 150), y + (scale * 100));
+        ctx.moveTo( 0 * scale, -2 * scale );
+        ctx.lineTo( 8 * scale, 6 * scale);
+        ctx.lineTo( 6 * scale, 8 * scale);
+        ctx.lineTo( 0 * scale, 2 * scale);
+        ctx.lineTo( -6 * scale, 8 * scale);
+        ctx.lineTo( -8 * scale, 6 * scale);
+        ctx.lineTo( 0 * scale, -2 * scale);
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -380,16 +366,13 @@ function shieldGenerator(canvas) {
 
     function drawPartyChevron(parent, foreground) {
         ctx = this.ctx;
-        var x = parent.startX;
-        var y = parent.startY;
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * 300));
-        ctx.lineTo(x + (scale * 150), y + (scale * 150));
-        ctx.lineTo(x + (scale * 300), y + (scale * 300));
-        ctx.lineTo(x + (scale * 150), y + (scale * 450));
-        ctx.lineTo(x + (scale * 0), y + (scale * 300));
+        ctx.moveTo( 0 * scale, -2 * scale );
+        ctx.lineTo( 16 * scale, 14 * scale);
+        ctx.lineTo( -16 * scale, 14 * scale);
+        ctx.lineTo( 0 * scale, -2 * scale);
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
@@ -406,10 +389,11 @@ function shieldGenerator(canvas) {
         var scale = parent.scale;
 
         ctx.beginPath();
-        ctx.moveTo(x + (scale * 0), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * -50));
-        ctx.lineTo(x + (scale * 300), y + (scale * 100));
-        ctx.lineTo(x + (scale * 0), y + (scale * 100));
+        ctx.moveTo( -6 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, -8 * scale);
+        ctx.lineTo( 6 * scale, -2 * scale);
+        ctx.lineTo( -6 * scale, -2 * scale);
+        ctx.lineTo( -6 * scale, -8 * scale);
         
         ctx.fillStyle = foreground;
         ctx.fill();

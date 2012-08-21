@@ -15,31 +15,49 @@
         <script>
             window.onload = function() {
                 
-                var canvas = document.getElementById("myCanvas");
+                canvas = document.getElementById("myCanvas");
                 sGen = new shieldGenerator(canvas);
-                sGen.drawShield();
 
-                var canvas = document.getElementById("myCanvas2");
-                sGen2 = new shieldGenerator(canvas);
-                sGen2.drawShield();
-
-                var canvas = document.getElementById("myCanvas3");
-                sGen3 = new shieldGenerator(canvas);
-                sGen3.drawShield();
-
-                var canvas = document.getElementById("myCanvas4");
-                sGen4 = new shieldGenerator(canvas);
-                sGen4.drawShield();
+                drawBlock();
             };
+
+            function drawBlock() {
+                //ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                var size = 'tiny';
+                //var size = 'small';
+                //var size = 'medium';
+                //var size = 'large';
+                switch (size) {
+                    case 'tiny':
+                        sGen.scale = 6;
+                        break;
+                    case 'small':
+                        sGen.scale = 12;
+                        break;
+                    case 'medium':
+                        sGen.scale = 24;
+                        break;
+                    case 'large':
+                        sGen.scale = 48;
+                        break;
+                }
+                var repX = 96 / sGen.scale;
+                var repY = 48 / sGen.scale;
+                console.log("Creating "+ repX +" by "+ repY);
+                for (var y = 1; y <= repY; y++) {
+                    for (var x = 1; x <= repX; x++) {
+                        sGen.posX = x;
+                        sGen.posY = y;
+                        //sGen.centerX = 0;
+                        sGen.drawShield();
+                    }
+                }
+            }
         </script>
 
     </head>
     <body>
-        <canvas id="myCanvas" width="320" height="400"></canvas>
-        <canvas id="myCanvas2" width="320" height="400"></canvas>
-        <canvas id="myCanvas3" width="320" height="400"></canvas>
-        <canvas id="myCanvas4" width="320" height="400"></canvas>
-        <br />
-        <button onclick="sGen.drawShield(); sGen2.drawShield(); sGen3.drawShield(); sGen4.drawShield();">&nbsp<br />Generate<br />&nbsp;</button>
+        <canvas id="myCanvas" width="1388" height="800" onclick="drawBlock();"></canvas>
     </body>
 </html>
