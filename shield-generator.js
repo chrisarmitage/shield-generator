@@ -54,30 +54,68 @@ function shieldGenerator(canvas) {
         ctx.fillStyle = background;
         ctx.fill();
 
-        var ordinary = Math.floor((Math.random()*7)+1);
-        //ordinary = 7;
-        switch (ordinary) {
-            case 1:
-                drawBend(this, foreground);
-                break;
-            case 2:
-                drawCross(this, foreground);
-                break;
-            case 3:
-                drawPale(this, foreground);
-                break;
-            case 4:
-                drawFess(this, foreground);
-                break;
-            case 5:
-                drawSaltire(this, foreground);
-                break;
-            case 6:
-                drawChevron(this, foreground);
-                break;
-            case 7:
-                drawChief(this, foreground);
-                break;
+
+        ctx.lineWidth = 1;
+
+        var fieldTypeRoll = Math.floor((Math.random()*100)+1);
+        var fieldType = 'blank';
+        if (fieldTypeRoll <= 45) {
+            fieldType = 'ordinary';
+        } else if (fieldTypeRoll <= 90) {
+            fieldType = 'party';
+        }
+
+        if (fieldType == 'ordinary') {
+            var ordinary = Math.floor((Math.random()*7)+1);
+            //ordinary = 7;
+            switch (ordinary) {
+                case 1:
+                    drawBend(this, foreground);
+                    break;
+                case 2:
+                    drawCross(this, foreground);
+                    break;
+                case 3:
+                    drawPale(this, foreground);
+                    break;
+                case 4:
+                    drawFess(this, foreground);
+                    break;
+                case 5:
+                    drawSaltire(this, foreground);
+                    break;
+                case 6:
+                    drawChevron(this, foreground);
+                    break;
+                case 7:
+                    drawChief(this, foreground);
+                    break;
+            }
+        }
+
+        if (fieldType == 'party') {
+            var ordinary = Math.floor((Math.random()*6)+1);
+            //ordinary = 7;
+            switch (ordinary) {
+                case 1:
+                    drawPartyBend(this, foreground);
+                    break;
+                case 2:
+                    drawPartyCross(this, foreground);
+                    break;
+                case 3:
+                    drawPartyPale(this, foreground);
+                    break;
+                case 4:
+                    drawPartyFess(this, foreground);
+                    break;
+                case 5:
+                    drawPartySaltire(this, foreground);
+                    break;
+                case 6:
+                    drawPartyChevron(this, foreground);
+                    break;
+            }
         }
 
         ctx.restore();
@@ -125,6 +163,23 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawPartyBend(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + (scale * 400), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * 0));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function drawCross(parent, foreground) {
         ctx = this.ctx;
         var x = parent.startX;
@@ -151,6 +206,33 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawPartyCross(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 150), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * 150));
+        ctx.lineTo(x + (scale * 150), y + (scale * 150));
+        ctx.lineTo(x + (scale * 150), y + (scale * -50));
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * 150));
+        ctx.lineTo(x + (scale * 150), y + (scale * 150));
+        ctx.lineTo(x + (scale * 150), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * 150));
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function drawPale(parent, foreground) {
         ctx = this.ctx;
         var x = parent.startX;
@@ -169,6 +251,24 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawPartyPale(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * -50));
+        ctx.lineTo(x + (scale * 150), y + (scale * -50));
+        ctx.lineTo(x + (scale * 150), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * 400));
+        ctx.lineTo(x + (scale * 0), y + (scale * -50));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function drawFess(parent, foreground) {
         ctx = this.ctx;
         var x = parent.startX;
@@ -181,6 +281,24 @@ function shieldGenerator(canvas) {
         ctx.lineTo(x + (scale * 300), y + (scale * 200));
         ctx.lineTo(x + (scale * 0), y + (scale * 200));
         ctx.lineTo(x + (scale * 0), y + (scale * 100));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawPartyFess(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * 150));
+        ctx.lineTo(x + (scale * 0), y + (scale * 150));
+        ctx.lineTo(x + (scale * 0), y + (scale * -50));
 
         ctx.fillStyle = foreground;
         ctx.fill();
@@ -213,6 +331,33 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawPartySaltire(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * -0));
+        ctx.lineTo(x + (scale * 150), y + (scale * -150));
+        ctx.lineTo(x + (scale * 300), y + (scale * 0));
+        ctx.lineTo(x + (scale * 150), y + (scale * 150));
+        ctx.lineTo(x + (scale * 0), y + (scale * -0));
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * 300));
+        ctx.lineTo(x + (scale * 150), y + (scale * 150));
+        ctx.lineTo(x + (scale * 300), y + (scale * 300));
+        ctx.lineTo(x + (scale * 150), y + (scale * 450));
+        ctx.lineTo(x + (scale * 0), y + (scale * 300));
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function drawChevron(parent, foreground) {
         ctx = this.ctx;
         var x = parent.startX;
@@ -227,6 +372,27 @@ function shieldGenerator(canvas) {
         ctx.lineTo(x + (scale * 0), y + (scale * 350));
         ctx.lineTo(x + (scale * -50), y + (scale * 300));
         ctx.lineTo(x + (scale * 150), y + (scale * 100));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawPartyChevron(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * 300));
+        ctx.lineTo(x + (scale * 150), y + (scale * 150));
+        ctx.lineTo(x + (scale * 300), y + (scale * 300));
+        ctx.lineTo(x + (scale * 150), y + (scale * 450));
+        ctx.lineTo(x + (scale * 0), y + (scale * 300));
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
 
         ctx.fillStyle = foreground;
         ctx.fill();
