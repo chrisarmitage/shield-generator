@@ -54,7 +54,8 @@ function shieldGenerator(canvas) {
         ctx.fillStyle = background;
         ctx.fill();
 
-        var ordinary = Math.floor((Math.random()*4)+1);
+        var ordinary = Math.floor((Math.random()*7)+1);
+        //ordinary = 7;
         switch (ordinary) {
             case 1:
                 drawBend(this, foreground);
@@ -67,6 +68,15 @@ function shieldGenerator(canvas) {
                 break;
             case 4:
                 drawFess(this, foreground);
+                break;
+            case 5:
+                drawSaltire(this, foreground);
+                break;
+            case 6:
+                drawChevron(this, foreground);
+                break;
+            case 7:
+                drawChief(this, foreground);
                 break;
         }
 
@@ -106,8 +116,8 @@ function shieldGenerator(canvas) {
 
         ctx.beginPath();
         ctx.moveTo(x, y - (50 * scale));
-        ctx.lineTo(x + (scale * 400), y + (scale * 350));
-        ctx.lineTo(x + (scale * 350), y + (scale * 400));
+        ctx.lineTo(x + (scale * 350), y + (scale * 300));
+        ctx.lineTo(x + (scale * 300), y + (scale * 350));
         ctx.lineTo(x + (scale * -50), y + (scale * 0));
 
         ctx.fillStyle = foreground;
@@ -172,6 +182,69 @@ function shieldGenerator(canvas) {
         ctx.lineTo(x + (scale * 0), y + (scale * 200));
         ctx.lineTo(x + (scale * 0), y + (scale * 100));
 
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawSaltire(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y - (50 * scale));
+        ctx.lineTo(x + (scale * 150), y + (scale * 100));
+        ctx.lineTo(x + (scale * 300), y + (scale * -50));
+        ctx.lineTo(x + (scale * 350), y + (scale * 0));
+        ctx.lineTo(x + (scale * 200), y + (scale * 150));
+        ctx.lineTo(x + (scale * 350), y + (scale * 300));
+        ctx.lineTo(x + (scale * 300), y + (scale * 350));
+        ctx.lineTo(x + (scale * 150), y + (scale * 200));
+        ctx.lineTo(x + (scale * 0), y + (scale * 350));
+        ctx.lineTo(x + (scale * -50), y + (scale * 300));
+        ctx.lineTo(x + (scale * 100), y + (scale * 150));
+
+        ctx.lineTo(x + (scale * -50), y + (scale * 0));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawChevron(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 150), y + (scale * 100));
+        ctx.lineTo(x + (scale * 350), y + (scale * 300));
+        ctx.lineTo(x + (scale * 300), y + (scale * 350));
+        ctx.lineTo(x + (scale * 150), y + (scale * 200));
+        ctx.lineTo(x + (scale * 0), y + (scale * 350));
+        ctx.lineTo(x + (scale * -50), y + (scale * 300));
+        ctx.lineTo(x + (scale * 150), y + (scale * 100));
+
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawChief(parent, foreground) {
+        ctx = this.ctx;
+        var x = parent.startX;
+        var y = parent.startY;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo(x + (scale * 0), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * -50));
+        ctx.lineTo(x + (scale * 300), y + (scale * 100));
+        ctx.lineTo(x + (scale * 0), y + (scale * 100));
+        
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
