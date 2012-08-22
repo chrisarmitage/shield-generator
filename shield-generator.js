@@ -32,7 +32,7 @@ function shieldGenerator(canvas) {
         var metals = new Array(
             "#ffdc0a",
             "#f0f0f0"
-        );
+            );
 
         var colours = new Array(
             "#0000ff",
@@ -40,7 +40,7 @@ function shieldGenerator(canvas) {
             "#aa00aa",
             "#000000",
             "#009600"
-        );
+            );
 
         var background = metals[Math.floor(Math.random() * metals.length)];
         var foreground = colours[Math.floor(Math.random() * colours.length)];
@@ -70,10 +70,10 @@ function shieldGenerator(canvas) {
 
         if (fieldType == 'ordinary') {
             
-            var ordinary = Math.floor((Math.random()*7)+1);
+            var ordinary = Math.floor((Math.random()*15)+1);
             console.log("o" + ordinary);
 
-            //ordinary = 7;
+            //ordinary = 15;
             switch (ordinary) {
                 case 1:
                     drawBend(this, foreground);
@@ -95,6 +95,30 @@ function shieldGenerator(canvas) {
                     break;
                 case 7:
                     drawChief(this, foreground);
+                    break;
+                case 8:
+                    drawPaly(this, foreground);
+                    break;
+                case 9:
+                    drawBarry(this, foreground);
+                    break;
+                case 10:
+                    drawChequy(this, foreground);
+                    break;
+                case 11:
+                    drawBendy(this, foreground);
+                    break;
+                case 12:
+                    drawLozengy(this, foreground);
+                    break;
+                case 13:
+                    drawChevronny(this, foreground);
+                    break;
+                case 14:
+                    drawBordure(this, foreground);
+                    break;
+                case 15:
+                    drawOrle(this, foreground);
                     break;
             }
         }
@@ -251,6 +275,24 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawPaly(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var n = -4; n <= 4; n+=4) {
+            ctx.beginPath();
+            ctx.moveTo( n * scale, -8 * scale);
+            ctx.lineTo( (n + 2) * scale, -8 * scale);
+            ctx.lineTo( (n + 2) * scale, 14 * scale);
+            ctx.lineTo( n * scale, 14 * scale);
+            ctx.lineTo( n * scale, -8 * scale);
+
+            ctx.fillStyle = foreground;
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
     function drawPartyPale(parent, foreground) {
         ctx = this.ctx;
         var scale = parent.scale;
@@ -281,6 +323,24 @@ function shieldGenerator(canvas) {
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
+    }
+
+    function drawBarry(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var n = -4; n <= 12; n+=4) {
+            ctx.beginPath();
+            ctx.moveTo( -6 * scale, n * scale);
+            ctx.lineTo( 6 * scale, n * scale);
+            ctx.lineTo( 6 * scale, (n + 2) * scale);
+            ctx.lineTo( -6 * scale, (n + 2) * scale);
+            ctx.lineTo( -6 * scale, n * scale);
+
+            ctx.fillStyle = foreground;
+            ctx.fill();
+            ctx.stroke();
+        }
     }
 
     function drawPartyFess(parent, foreground) {
@@ -364,6 +424,26 @@ function shieldGenerator(canvas) {
         ctx.stroke();
     }
 
+    function drawChevronny(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var y = -14; y <= 10; y+=8) {
+            ctx.beginPath();
+            ctx.moveTo( 0 * scale, y * scale );
+            ctx.lineTo( 8 * scale, (y + 8) * scale);
+            ctx.lineTo( 6 * scale, (y + 10) * scale);
+            ctx.lineTo( 0 * scale, (y + 4) * scale);
+            ctx.lineTo( -6 * scale, (y + 10) * scale);
+            ctx.lineTo( -8 * scale, (y + 8) * scale);
+            ctx.lineTo( 0 * scale, y * scale);
+
+            ctx.fillStyle = foreground;
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
     function drawPartyChevron(parent, foreground) {
         ctx = this.ctx;
         var scale = parent.scale;
@@ -398,6 +478,104 @@ function shieldGenerator(canvas) {
         ctx.fillStyle = foreground;
         ctx.fill();
         ctx.stroke();
+    }
+
+    function drawChequy(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var y = -8; y <= 10; y+=4) {
+
+            for (var n = -4; n <= 6; n+=4) {
+                ctx.beginPath();
+                ctx.moveTo( n * scale, y * scale);
+                ctx.lineTo( (n + 2) * scale, y * scale);
+                ctx.lineTo( (n + 2) * scale, (y + 2) * scale);
+                ctx.lineTo( n * scale, (y + 2) * scale);
+                ctx.lineTo( n * scale, y * scale);
+
+                ctx.fillStyle = foreground;
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            for (var n = -6; n <= 6; n+=4) {
+                ctx.beginPath();
+                ctx.moveTo( n * scale, (y + 2) * scale);
+                ctx.lineTo( (n + 2) * scale, (y + 2) * scale);
+                ctx.lineTo( (n + 2) * scale, (y + 4) * scale);
+                ctx.lineTo( n * scale, (y + 4) * scale);
+                ctx.lineTo( n * scale, (y + 2)* scale);
+
+                ctx.fillStyle = foreground;
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+    }
+
+    function drawBendy(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var y = -14; y <= 12; y+=8) {
+            ctx.beginPath();
+            ctx.moveTo( -6 * scale, y * scale);
+            ctx.lineTo( 8 * scale, (y + 14) * scale);
+            ctx.lineTo( 6 * scale, (y + 16) * scale);
+            ctx.lineTo( -8 * scale, (y + 2) * scale);
+            ctx.lineTo( -6 * scale, y * scale);
+
+            ctx.fillStyle = foreground;
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
+    function drawLozengy(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        for (var y = -9; y <= 12; y+=3) {
+
+            for (var x = -6; x <= 6; x+=3) {
+                ctx.beginPath();
+                ctx.moveTo( x * scale, y * scale);
+                ctx.lineTo( (x + 1.5) * scale, (y + 1.5) * scale);
+                ctx.lineTo( x * scale, (y + 3) * scale);
+                ctx.lineTo( (x - 1.5) * scale, (y + 1.5) * scale);
+                ctx.lineTo( x * scale, y * scale);
+
+                ctx.fillStyle = foreground;
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+    }
+
+    function drawBordure(parent, foreground) {
+        ctx = this.ctx;
+
+        ctx.save();
+        ctx.scale(0.75, 0.75);
+        pathShield(parent);
+        ctx.fillStyle = foreground;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function drawOrle(parent, foreground) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        ctx.save();
+        ctx.scale(0.85, 0.85);
+        pathShield(parent);
+        ctx.strokeStyle = foreground;
+        ctx.lineWidth = 0.7 * scale;
+        ctx.stroke();
+        ctx.restore();
     }
 
 }
