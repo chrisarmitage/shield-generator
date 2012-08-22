@@ -3,3 +3,9 @@ Shield Generator
 The result of playing with the HTML5 Canvas API. Also planned to help me practice my Git / GitHub.
 
 Generates simple heraldic shield designs.
+
+
+2012-08-22
+It's been a great exercise in learning the Canvas API, but Javascript is just too unwieldy for the
+direction the project is going in. I may come back and play with it again, but as it stands, the
+code is going to be ported over to PHP / GD.

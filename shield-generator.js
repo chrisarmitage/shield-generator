@@ -43,7 +43,11 @@ function shieldGenerator(canvas) {
             );
 
         var background = metals[Math.floor(Math.random() * metals.length)];
-        var foreground = colours[Math.floor(Math.random() * colours.length)];
+        fgNum = Math.floor(Math.random() * colours.length);
+        var foreground = colours[fgNum];
+        colours.splice(fgNum, 1);
+        fgNum = Math.floor(Math.random() * colours.length);
+        var chargeColour = colours[fgNum];
 
         if (Math.floor(Math.random() * 2) == 1) {
             var temp = background;
@@ -150,6 +154,70 @@ function shieldGenerator(canvas) {
             }
         }
 
+        var chargeLocations = new Array();
+        var chargeLayout = Math.floor((Math.random()*6)+1);
+        
+        switch (chargeLayout) {
+            case 1: // Single large
+                chargeLocations.push([ 0, 0, 1]);
+                break;
+            case 2: // Three line upper
+                chargeLocations.push([ -3, -2, 0.4]);
+                chargeLocations.push([ 0, -2, 0.4]);
+                chargeLocations.push([ 3, -2, 0.4]);
+                break;
+            case 3: // Three. middle lower
+                chargeLocations.push([ -3, -2, 0.5]);
+                chargeLocations.push([ 0, 2, 0.5]);
+                chargeLocations.push([ 3, -2, 0.5]);
+                break;
+            case 4: // Three. bend line
+                chargeLocations.push([ -3, -3, 0.5]);
+                chargeLocations.push([ 0, 0, 0.5]);
+                chargeLocations.push([ 3, 3, 0.5]);
+                break;
+            case 5: // Currently blank
+            case 6: // Currently blank
+        }
+
+
+        var chargeTypes = new Array(
+            "Lozenge",
+            "Cross",
+            "MalteseCross"
+            );
+        var chargeType = chargeTypes[Math.floor(Math.random() * chargeTypes.length)];
+
+        console.log(chargeType);
+        for (var loc in chargeLocations) {
+            switch (chargeType) {
+                case 'Lozenge':
+                    drawChargeLozenge(this,
+                        chargeColour,
+                        chargeLocations[loc][0],
+                        chargeLocations[loc][1],
+                        chargeLocations[loc][2]
+                    );
+                    break;
+                case 'Cross':
+                    drawChargeCross(this,
+                        chargeColour,
+                        chargeLocations[loc][0],
+                        chargeLocations[loc][1],
+                        chargeLocations[loc][2]
+                    );
+                    break;
+                case 'MalteseCross':
+                    drawChargeMalteseCross(this,
+                        chargeColour,
+                        chargeLocations[loc][0],
+                        chargeLocations[loc][1],
+                        chargeLocations[loc][2]
+                    );
+                    break;
+            }
+        }
+
         ctx.restore();
 
         pathShield(this);
@@ -178,6 +246,86 @@ function shieldGenerator(canvas) {
         ctx.lineTo( -6 * scale, -6 * scale );
         ctx.closePath();
 
+    }
+
+    function drawChargeLozenge(parent, colour, x, y, size) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo( (( 0 * size) + x) * scale, (( -4 * size) + y) * scale);
+        ctx.lineTo( (( 2 * size) + x) * scale, (( 0 * size) + y) * scale);
+        ctx.lineTo( (( 0 * size) + x) * scale, (( 4 * size) + y) * scale);
+        ctx.lineTo( (( -2 * size) + x) * scale, (( 0 * size) + y) * scale);
+        ctx.lineTo( (( 0 * size) + x) * scale, (( -4 * size) + y) * scale);
+
+        ctx.fillStyle = colour;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawChargeCross(parent, colour, x, y, size) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        ctx.moveTo( (( -0.5 * size) + x) * scale, (( -3 * size) + y) * scale);
+        ctx.lineTo( (( 0.5 * size) + x) * scale, (( -3 * size) + y) * scale);
+        ctx.lineTo( (( 0.5 * size) + x) * scale, (( -0.5 * size) + y) * scale);
+        ctx.lineTo( (( 3 * size) + x) * scale, (( -0.5 * size) + y) * scale);
+        ctx.lineTo( (( 3 * size) + x) * scale, (( 0.5 * size) + y) * scale);
+        ctx.lineTo( (( 0.5 * size) + x) * scale, (( 0.5 * size) + y) * scale);
+        ctx.lineTo( (( 0.5 * size) + x) * scale, (( 3 * size) + y) * scale);
+        ctx.lineTo( (( -0.5 * size) + x) * scale, (( 3 * size) + y) * scale);
+        ctx.lineTo( (( -0.5 * size) + x) * scale, (( 0.5 * size) + y) * scale);
+        ctx.lineTo( (( -3 * size) + x) * scale, (( 0.5 * size) + y) * scale);
+        ctx.lineTo( (( -3 * size) + x) * scale, (( -0.5 * size) + y) * scale);
+        ctx.lineTo( (( -0.5 * size) + x) * scale, (( -0.5 * size) + y) * scale);
+        ctx.lineTo( (( -0.5 * size) + x) * scale, (( -3 * size) + y) * scale);
+
+        ctx.fillStyle = colour;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawChargeMalteseCross(parent, colour, x, y, size) {
+        ctx = this.ctx;
+        var scale = parent.scale;
+
+        ctx.beginPath();
+        mTo(parent, 0, 0, x, y, size);
+        lTo(parent, -1, -3, x, y, size);
+        lTo(parent, 0, -2, x, y, size);
+        lTo(parent, 1, -3, x, y, size);
+        lTo(parent, 0, 0, x, y, size);
+        lTo(parent, 3, -1, x, y, size);
+        lTo(parent, 2, 0, x, y, size);
+        lTo(parent, 3, 1, x, y, size);
+        lTo(parent, 0, 0, x, y, size);
+        lTo(parent, 1, 3, x, y, size);
+        lTo(parent, 0, 2, x, y, size);
+        lTo(parent, -1, 3, x, y, size);
+        lTo(parent, 0, 0, x, y, size);
+        lTo(parent, -3, 1, x, y, size);
+        lTo(parent, -2, 0, x, y, size);
+        lTo(parent, -3, -1, x, y, size);
+        lTo(parent, 0, 0, x, y, size);
+
+        ctx.fillStyle = colour;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function mTo(parent, x, y, offsetX, offsetY, size) {
+        ctx = parent.ctx;
+        var scale = parent.scale;
+        ctx.moveTo( (( x * size) + offsetX) * scale, (( y * size) + offsetY) * scale);
+    }
+
+    function lTo(parent, x, y, offsetX, offsetY, size) {
+        ctx = parent.ctx;
+        var scale = parent.scale;
+        ctx.lineTo( (( x * size) + offsetX) * scale, (( y * size) + offsetY) * scale);
     }
 
     function drawBend(parent, foreground) {
